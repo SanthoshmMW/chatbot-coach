@@ -4,12 +4,14 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the dist directory
-app.use(express.static(path.join(__dirname, 'dist/mw-coach')));
+const distPath = path.join(__dirname, 'dist/mw-coach');
 
-// Handle Angular routing - send all requests to index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/mw-coach/index.html'));
+// Serve static files from the dist directory
+app.use(express.static(distPath));
+
+// Handle Angular routing - send all non-file requests to index.html
+app.use((req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {
