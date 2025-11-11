@@ -1,0 +1,105 @@
+<div class="chatbot-container" [class.open]="isChatOpen">
+  <!-- Chat Toggle Button -->
+  <div class="chat-toggle" (click)="toggleChat()" *ngIf="!isChatOpen">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span class="chat-badge">Chat</span>
+  </div>
+
+  <!-- Chat Window -->
+  <div class="chat-window" *ngIf="isChatOpen">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="header-content">
+        <div class="bot-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <div class="header-info">
+          <h3>MW Coach</h3>
+          <p>LMX Platform Assistant</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="toggleChat()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Category Pills -->
+    <div class="category-pills">
+      <button *ngFor="let category of categories" 
+              class="category-pill" 
+              (click)="selectCategory(category)">
+        {{ category }}
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages">
+      <div *ngFor="let message of messages" 
+           class="message-wrapper" 
+           [class.user-message]="message.isUser"
+           [class.bot-message]="!message.isUser">
+        
+        <div class="message-bubble">
+          <div class="message-text">{{ message.text }}</div>
+          
+          <!-- FAQ Results -->
+          <div *ngIf="message.faqs && message.faqs.length > 0" class="faq-results">
+            <div *ngFor="let faq of message.faqs" class="faq-item">
+              <div class="faq-question">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                {{ faq.question }}
+              </div>
+              <div class="faq-answer">{{ faq.answer }}</div>
+              <div class="faq-category" *ngIf="faq.category">
+                <span class="category-tag">{{ faq.category }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="message-time">{{ message.timestamp | date: 'short' }}</div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div *ngIf="isTyping" class="message-wrapper bot-message">
+        <div class="message-bubble typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input">
+      <input 
+        type="text" 
+        [(ngModel)]="userInput" 
+        (keypress)="handleKeyPress($event)"
+        placeholder="Ask me anything about LMX..."
+        class="input-field"
+      />
+      <button 
+        (click)="sendMessage()" 
+        [disabled]="!userInput.trim()"
+        class="send-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
