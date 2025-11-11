@@ -2,9 +2,11 @@
 
 An intelligent Angular 8 chatbot assistant for the LMX (Location Media Exchange) platform, providing instant answers to questions about billboard management, pricing strategies, tags organization, and more.
 
-## 🌐 Live Demo
+## 🔗 Links
 
-**Access the chatbot here:** https://3000-i09jl2t627bmsjuoy1c13-3844e1b6.sandbox.novita.ai
+- **Live Demo:** https://3000-i09jl2t627bmsjuoy1c13-3844e1b6.sandbox.novita.ai
+- **GitHub Repository:** https://github.com/SanthoshmMW/chatbot-coach
+- **Download Backup:** https://page.gensparksite.com/project_backups/mw-coach-chatbot-complete.tar.gz
 
 ## ✨ Features
 
@@ -49,8 +51,8 @@ Generated from actual LMX platform training videos, covering:
 
 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
-cd webapp
+git clone https://github.com/SanthoshmMW/chatbot-coach.git
+cd chatbot-coach
 ```
 
 2. **Install dependencies**
